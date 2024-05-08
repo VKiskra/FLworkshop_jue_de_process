@@ -4,7 +4,7 @@
 
 ## 如何使用
 
-1. 將要處理的文檔與處理的程式放置在同一資料夾下，此處範例為 `jue_de_raw.txt`。
+1. 將要處理的文檔 `jue_de_raw.txt` 與處理的程式放置在同一資料夾 `jue_de_program` 下。
 2. 執行 `jue_de_process.py` 程式。
 3. 程式將會生成一個新的文本檔案 `jue_de_cleaned.txt`，其中包含處理後的句子。
 
