@@ -7,15 +7,15 @@ def extract_last_word_after_more_from_file(filename):
 
     for line in lines:
         if line.startswith("more"):
-            # 找到最后一个标点符号的索引
+            # 找到最後一個標點符號
             last_punctuation_index = max(line.rfind('。'), line.rfind('？'), line.rfind('！'),  line.rfind('；'), line.rfind('：'), line.rfind('，'))
-            # 如果最后一个标点符号存在，取出最后一个标点符号后的句子
+            # 如果有標點符號，取出標點符號後的句子
             if last_punctuation_index != -1:
                 last_sentence = line[last_punctuation_index + 1:].strip()
                 if last_sentence:
                     results.append(last_sentence)
             else:
-                # 否则，取出 "more" 后的内容
+                # 如果沒有標點符號，取出more後面的完整句子
                 results.append(line[4:].strip())
     return results
 
@@ -39,7 +39,7 @@ def merge_sentences(filename, keyword):
     first_sentences = extract_last_word_after_more_from_file(filename)
     last_sentences = extract_sentences_with_keyword(filename, keyword)
     
-    # 检查文件的最后一行是否以关键字开头
+    # 檢查文件的最後一行由甚麼開頭
     with open(filename, mode='r', encoding="utf-8") as f:
         last_line = f.readlines()[-1]
         if last_line.startswith("more"):
@@ -48,7 +48,7 @@ def merge_sentences(filename, keyword):
                 if keyword in part:
                     last_sentences.append(part.strip('，。？！、；：'))
     
-    # 合并句子
+    # 合併句子
     merged_sentences = []
     for first_sentence, last_sentence in zip(first_sentences, last_sentences):
         merged_sentence = first_sentence + last_sentence
@@ -57,15 +57,15 @@ def merge_sentences(filename, keyword):
     return merged_sentences
 
 def remove_whitespace(text):
-    # 使用正则表达式替换所有空格为 ""
+    # 把所有空格刪除
     return re.sub(r'\s', '', text)
 
-# 使用示例:
+# 處理文字檔案
 filename = "jue_de_raw.txt"
 keyword = "覺得"
 merged_sentences = merge_sentences(filename, keyword)
 
-# 将处理后的句子写入到新的文件 jue_de_cleaned.txt 中
+# 將處理過的句子寫到新的文件 jue_de_cleaned.txt 中
 output_filename = "jue_de_cleaned.txt"
 with open(output_filename, mode='w', encoding='utf-8') as f:
     for sentence in merged_sentences:
@@ -73,4 +73,4 @@ with open(output_filename, mode='w', encoding='utf-8') as f:
         f.write(sentence_without_whitespace + '\n')
         print(sentence_without_whitespace)
         
-print("处理后的句子已保存到文件:", output_filename)
+print("已保存處理過的文檔:", output_filename)
